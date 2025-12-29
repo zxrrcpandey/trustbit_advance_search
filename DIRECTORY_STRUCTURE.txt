@@ -1,0 +1,278 @@
+Trustbit Advance Search - Complete Directory Structure
+======================================================
+
+trustbit_advance_search/
+│
+├── 📚 DOCUMENTATION FILES
+│   ├── README.md                     Main documentation and features
+│   ├── QUICKSTART.md                 Quick start guide (start here!)
+│   ├── INSTALLATION.md               Detailed installation instructions
+│   ├── USAGE.md                      Complete usage guide
+│   ├── CONFIGURATION.md              Configuration and customization
+│   ├── PROJECT_SUMMARY.md            Technical project summary
+│   └── DIRECTORY_STRUCTURE.txt       This file
+│
+├── 📋 CONFIGURATION FILES
+│   ├── setup.py                      Python package setup
+│   ├── requirements.txt              Python dependencies
+│   ├── MANIFEST.in                   Package manifest
+│   ├── license.txt                   MIT License
+│   └── .gitignore                    Git ignore rules
+│
+└── 📦 APPLICATION FILES
+    └── trustbit_advance_search/
+        │
+        ├── 🔧 CORE APP FILES
+        │   ├── __init__.py           App version and initialization
+        │   └── hooks.py              Frappe hooks configuration
+        │
+        ├── 🔌 API MODULE
+        │   └── api/
+        │       ├── __init__.py
+        │       └── item_search.py    Search API functions
+        │           ├── fuzzy_search_items()
+        │           ├── search_by_barcode()
+        │           ├── get_item_price()
+        │           └── validate_item_for_transaction()
+        │
+        ├── ⚙️ CONFIGURATION MODULE
+        │   └── config/
+        │       ├── __init__.py
+        │       ├── desktop.py        Desktop icon configuration
+        │       └── docs.py           Documentation settings
+        │
+        └── 🎨 FRONTEND FILES
+            └── public/
+                └── js/
+                    ├── trustbit_search_common.js    Core search functionality
+                    │   ├── doctype_config{}         DocType configurations
+                    │   ├── setup_keyboard_shortcuts()
+                    │   ├── open_barcode_dialog()
+                    │   ├── open_quick_add_dialog()
+                    │   ├── try_barcode_then_search()
+                    │   ├── search_items()
+                    │   ├── display_results()
+                    │   ├── load_item_details()
+                    │   ├── add_item_to_doc()
+                    │   └── reset_dialog()
+                    │
+                    ├── purchase_order.js            Purchase Order integration
+                    ├── purchase_invoice.js          Purchase Invoice integration
+                    ├── sales_order.js               Sales Order integration
+                    ├── sales_invoice.js             Sales Invoice integration
+                    └── material_request.js          Material Request integration
+
+
+FILE SUMMARY
+============
+
+Documentation:    7 files (README, guides, this file)
+Configuration:    5 files (setup, requirements, manifest, license, gitignore)
+Python Code:      5 files (__init__, hooks, api module)
+JavaScript:       6 files (common + 5 doctype scripts)
+─────────────────────────────────────────────────────
+TOTAL:           23 files
+
+
+KEY FILES TO KNOW
+=================
+
+📖 START HERE:
+   └── QUICKSTART.md                 Get started quickly
+
+🔧 INSTALLATION:
+   └── INSTALLATION.md               How to install
+
+📚 LEARN TO USE:
+   └── USAGE.md                      How to use all features
+
+⚙️ CUSTOMIZE:
+   └── CONFIGURATION.md              Configure and customize
+
+🔌 BACKEND CODE:
+   └── api/item_search.py            Python search functions
+
+🎨 FRONTEND CODE:
+   └── public/js/trustbit_search_common.js   JavaScript UI code
+
+🔗 INTEGRATION:
+   └── hooks.py                      Frappe hooks configuration
+
+
+FEATURES BY FILE
+================
+
+item_search.py (Backend - Python)
+├── Fuzzy search with word-order independence
+├── Barcode search functionality
+├── Price fetching logic
+└── Item validation
+
+trustbit_search_common.js (Frontend - JavaScript)
+├── Keyboard shortcuts (Ctrl+K, Ctrl+B)
+├── Barcode scanner dialog
+├── Quick search dialog
+├── Result display and selection
+├── Item details loading
+├── Pricing integration
+└── Add to document functionality
+
+[doctype].js files (Integration)
+├── Form initialization
+├── Button creation
+└── Event delegation to common functions
+
+
+WORKFLOW OVERVIEW
+=================
+
+User Action → Keyboard Shortcut → Dialog Opens
+                                       ↓
+                          User Searches/Scans
+                                       ↓
+                          Frontend → Backend API Call
+                                       ↓
+                          SQL Query → Database
+                                       ↓
+                          Results → Frontend
+                                       ↓
+                          Display → User Selects
+                                       ↓
+                          Load Details + Pricing
+                                       ↓
+                          User Confirms
+                                       ↓
+                          Add to Document Child Table
+
+
+INSTALLATION SUMMARY
+====================
+
+1. Copy app to bench/apps/
+2. Run: bench get-app [path]
+3. Run: bench --site [site] install-app trustbit_advance_search
+4. Run: bench build
+5. Run: bench restart
+6. Open ERPNext and test!
+
+
+USAGE SUMMARY
+=============
+
+Quick Search:  Ctrl+K → Type → Select → Add
+Barcode Scan:  Ctrl+B → Scan → Quantity → Add
+
+
+SUPPORTED DOCUMENTS
+===================
+
+✓ Purchase Order
+✓ Purchase Invoice
+✓ Sales Order
+✓ Sales Invoice
+✓ Material Request
+
+
+KEYBOARD SHORTCUTS
+==================
+
+Ctrl+K  or  Cmd+K    Open Quick Search
+Ctrl+B  or  Cmd+B    Open Barcode Scanner
+Enter                Search/Scan
+Esc                  Close Dialog
+
+
+CUSTOMIZATION POINTS
+====================
+
+Add New DocType:
+├── 1. Edit trustbit_search_common.js → Add to doctype_config
+├── 2. Create new [doctype].js file
+├── 3. Update hooks.py
+└── 4. Rebuild and restart
+
+Modify Search:
+├── 1. Edit api/item_search.py → fuzzy_search_items()
+└── 2. Customize SQL query, filters, ranking
+
+Change Shortcuts:
+├── 1. Edit trustbit_search_common.js → setup_keyboard_shortcuts()
+└── 2. Change key bindings
+
+Custom Pricing:
+├── 1. Edit trustbit_search_common.js → load_item_details()
+└── 2. Add custom pricing API call
+
+
+DEPENDENCIES
+============
+
+Required:
+├── frappe     (Frappe Framework)
+└── erpnext    (ERPNext)
+
+Optional:
+└── Barcode scanner hardware (for barcode scanning)
+
+
+VERSION INFO
+============
+
+App Version:      0.0.1
+License:          MIT
+Python:           3.6+
+Frappe:           13+
+ERPNext:          13+
+
+
+SUPPORT & RESOURCES
+===================
+
+📖 Documentation:  Check all .md files in root directory
+🔧 Customization:  Edit files as needed (backup first!)
+🐛 Troubleshooting: See INSTALLATION.md troubleshooting section
+💡 Examples:       See USAGE.md for workflows
+
+
+QUICK TIPS
+==========
+
+✓ Always clear cache after changes
+✓ Test in development environment first
+✓ Keep backups before modifications
+✓ Read QUICKSTART.md to get started fast
+✓ Configure barcodes in Item master
+✓ Set up price lists for accurate pricing
+✓ Use "Set Warehouse" in documents
+
+
+PROJECT STATUS
+==============
+
+Status: ✅ COMPLETE AND READY TO USE
+
+All features implemented:
+✓ Fuzzy search
+✓ Barcode scanning
+✓ 5 doctypes supported
+✓ Keyboard shortcuts
+✓ Pricing integration
+✓ Full documentation
+✓ Installation scripts
+✓ Configuration guides
+
+Ready for:
+✓ Installation
+✓ Testing
+✓ Production use
+✓ Customization
+
+
+═══════════════════════════════════════════════════════════════
+
+For more information, see:
+- QUICKSTART.md    (fastest way to get started)
+- README.md        (complete overview)
+- PROJECT_SUMMARY.md (technical details)
+
+═══════════════════════════════════════════════════════════════

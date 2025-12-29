@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include trustbit_advance_search *.css
+recursive-include trustbit_advance_search *.csv
+recursive-include trustbit_advance_search *.html
+recursive-include trustbit_advance_search *.ico
+recursive-include trustbit_advance_search *.js
+recursive-include trustbit_advance_search *.json
+recursive-include trustbit_advance_search *.md
+recursive-include trustbit_advance_search *.png
+recursive-include trustbit_advance_search *.py
+recursive-include trustbit_advance_search *.svg
+recursive-include trustbit_advance_search *.txt
+recursive-exclude trustbit_advance_search *.pyc

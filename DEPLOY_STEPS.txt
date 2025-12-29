@@ -1,0 +1,238 @@
+════════════════════════════════════════════════════════════════════════
+TRUSTBIT ADVANCE SEARCH - DEPLOYMENT STEPS
+════════════════════════════════════════════════════════════════════════
+
+📦 OPTION 1: AUTOMATIC DEPLOYMENT (EASIEST)
+─────────────────────────────────────────────────────────────────────
+
+1. Open Terminal
+2. Run the deployment script:
+
+   cd "/Users/warroom/Trustbit Software/Trustbit Apps/Projects/Trustbit Advance Search"
+   ./QUICK_DEPLOY.sh
+
+3. Follow the prompts:
+   - Enter your GitHub username
+   - Enter GitHub credentials if asked
+
+4. Done! ✅
+
+
+📦 OPTION 2: MANUAL DEPLOYMENT (STEP BY STEP)
+─────────────────────────────────────────────────────────────────────
+
+PART A: PUSH TO GITHUB
+───────────────────────
+
+1. Open Terminal and navigate to project:
+
+   cd "/Users/warroom/Trustbit Software/Trustbit Apps/Projects/Trustbit Advance Search"
+
+
+2. Initialize Git:
+
+   git init
+   git add .
+   git commit -m "Initial commit: Trustbit Advance Search v0.0.1"
+
+
+3. Create GitHub Repository:
+
+   • Go to: https://github.com/new
+   • Repository name: trustbit_advance_search
+   • Description: Advanced item search with barcode support for ERPNext
+   • Public or Private: (your choice)
+   • DON'T check: Initialize with README, .gitignore, or license
+   • Click: "Create repository"
+
+
+4. Push to GitHub (replace YOUR_USERNAME):
+
+   git remote add origin https://github.com/YOUR_USERNAME/trustbit_advance_search.git
+   git branch -M main
+   git push -u origin main
+
+   (Enter GitHub credentials when prompted)
+
+
+5. Verify on GitHub:
+
+   • Go to: https://github.com/YOUR_USERNAME/trustbit_advance_search
+   • Check all files are uploaded
+   • README.md should display nicely
+
+
+PART B: INSTALL ON SERVER
+──────────────────────────
+
+6. SSH to your ERPNext server:
+
+   ssh your-username@your-server-ip
+
+   Example:
+   ssh frappe@192.168.1.100
+
+
+7. Navigate to bench:
+
+   cd ~/frappe-bench
+
+   (If not found, try: cd /home/frappe/frappe-bench)
+
+
+8. Get the app from GitHub (replace YOUR_USERNAME):
+
+   bench get-app https://github.com/YOUR_USERNAME/trustbit_advance_search.git
+
+
+9. Install on your site (replace site1.local with your site name):
+
+   bench --site site1.local install-app trustbit_advance_search
+
+   (To find site name: ls sites/)
+
+
+10. Build assets:
+
+    bench build --app trustbit_advance_search
+
+
+11. Clear cache:
+
+    bench --site site1.local clear-cache
+
+
+12. Restart:
+
+    bench restart
+
+
+PART C: TEST IN BROWSER
+────────────────────────
+
+13. Open ERPNext in browser:
+
+    http://your-server-ip
+    (or https://erpnext.yourcompany.com)
+
+
+14. Login and test:
+
+    • Go to: Buying → Purchase Order → New
+    • Look for new buttons in "Actions" dropdown
+    • Press Ctrl+K to test Quick Search
+    • Press Ctrl+B to test Barcode Scanner
+
+
+15. Success! 🎉
+
+    If buttons appear and Ctrl+K works, installation is successful!
+
+
+════════════════════════════════════════════════════════════════════════
+TROUBLESHOOTING
+════════════════════════════════════════════════════════════════════════
+
+❌ Problem: Buttons not showing
+
+✅ Solution:
+   On server:
+   bench --site sitename clear-cache
+   bench build --app trustbit_advance_search --force
+   bench restart
+
+   In browser:
+   Hard refresh: Ctrl+F5 (Windows) or Cmd+Shift+R (Mac)
+
+
+❌ Problem: "App not found" when installing
+
+✅ Solution:
+   Check GitHub URL is correct:
+   https://github.com/YOUR_USERNAME/trustbit_advance_search.git
+
+   Make sure repository is Public or you have access
+
+
+❌ Problem: Permission denied
+
+✅ Solution:
+   cd ~/frappe-bench
+   sudo chown -R frappe:frappe apps/trustbit_advance_search
+   bench --site sitename install-app trustbit_advance_search
+
+
+❌ Problem: Build fails
+
+✅ Solution:
+   bench setup requirements
+   bench build --app trustbit_advance_search
+
+
+════════════════════════════════════════════════════════════════════════
+QUICK COMMAND REFERENCE
+════════════════════════════════════════════════════════════════════════
+
+📍 YOUR MAC (for GitHub push):
+────────────────────────────
+
+cd "/Users/warroom/Trustbit Software/Trustbit Apps/Projects/Trustbit Advance Search"
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/USERNAME/trustbit_advance_search.git
+git branch -M main
+git push -u origin main
+
+
+📍 SERVER (for installation):
+───────────────────────────
+
+ssh user@server-ip
+cd ~/frappe-bench
+bench get-app https://github.com/USERNAME/trustbit_advance_search.git
+bench --site sitename install-app trustbit_advance_search
+bench build --app trustbit_advance_search
+bench --site sitename clear-cache
+bench restart
+
+
+📍 AFTER MAKING CHANGES:
+──────────────────────
+
+On Mac:
+  git add .
+  git commit -m "Description"
+  git push origin main
+
+On Server:
+  cd ~/frappe-bench/apps/trustbit_advance_search
+  git pull origin main
+  cd ~/frappe-bench
+  bench build --app trustbit_advance_search
+  bench --site sitename clear-cache
+  bench restart
+
+
+════════════════════════════════════════════════════════════════════════
+WHAT YOU'LL NEED
+════════════════════════════════════════════════════════════════════════
+
+✓ GitHub account
+✓ GitHub username
+✓ Server SSH access (username and IP)
+✓ Site name on server (find with: ls ~/frappe-bench/sites/)
+✓ 10-15 minutes
+
+════════════════════════════════════════════════════════════════════════
+FULL DOCUMENTATION
+════════════════════════════════════════════════════════════════════════
+
+📖 Detailed Guide: DEPLOYMENT_GUIDE.md
+📖 Testing Guide: TESTING_GUIDE.md
+📖 Quick Start: QUICKSTART.md
+📖 Installation: INSTALLATION.md
+
+════════════════════════════════════════════════════════════════════════
+
+Ready? Start with Option 1 (Automatic) or Option 2 (Manual) above! 🚀
