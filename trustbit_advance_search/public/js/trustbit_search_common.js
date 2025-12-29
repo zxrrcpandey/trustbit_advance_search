@@ -377,14 +377,17 @@ trustbit_advance_search = {
 			if (text) trustbit_advance_search.try_barcode_then_search(d, frm, text);
 		};
 
-		d.fields_dict.search_text.$input.on('change', function() {
+		// Auto-search on input with debounce
+		d.fields_dict.search_text.$input.on('input', function() {
 			clearTimeout(d.search_timeout);
-			d.search_timeout = setTimeout(() => {
-				let text = d.get_value('search_text');
-				if (text && text.length >= 2) {
+			let text = d.get_value('search_text');
+
+			// Show searching indicator if text is long enough
+			if (text && text.length >= 2) {
+				d.search_timeout = setTimeout(() => {
 					trustbit_advance_search.try_barcode_then_search(d, frm, text);
-				}
-			}, 500);
+				}, 300); // Reduced from 500ms to 300ms for faster response
+			}
 		});
 
 		d.fields_dict.qty.$input.on('change', () => trustbit_advance_search.update_amount(d));
