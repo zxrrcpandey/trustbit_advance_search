@@ -5,7 +5,12 @@
       "Bash(tree:*)",
       "Bash(chmod:*)",
       "Bash(ls:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(sshpass -p 'B2?x;lZB@bkY;jz#W.@j' ssh -o StrictHostKeyChecking=no frappe_user@195.35.45.237 \"cd frappe-bench && pwd && ls -la | head -20\")",
+      "Bash(ssh -o StrictHostKeyChecking=no frappe_user@195.35.45.237 \"echo ''B2?x;lZB@bkY;jz#W.@j'' | sudo -S -u frappe_user bash -c ''cd ~/frappe-bench && pwd''\")",
+      "Bash(brew install:*)"
     ]
   }
 }
