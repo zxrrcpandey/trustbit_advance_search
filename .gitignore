@@ -22,3 +22,10 @@ sites/
 develop-eggs/
 pip-log.txt
 pip-delete-this-directory.txt
+
+# Personal deployment files (not for public)
+PERSONAL_DEPLOYMENT/
+DEPLOYMENT_GUIDE.md
+DEPLOY_STEPS.txt
+QUICK_DEPLOY.sh
+TESTING_GUIDE.md
