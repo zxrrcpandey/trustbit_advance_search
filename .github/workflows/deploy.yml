@@ -16,42 +16,30 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          port: ${{ secrets.SERVER_PORT || 22 }}
+          port: 22
           script: |
             set -e
 
-            echo "=== Finding bench directory ==="
-            # Auto-detect bench path
-            BENCH_PATH=""
-            for path in /home/frappe/frappe-bench /home/$USER/frappe-bench /opt/bench/frappe-bench; do
-              if [ -f "$path/Procfile" ]; then
-                BENCH_PATH="$path"
-                break
-              fi
-            done
-
-            if [ -z "$BENCH_PATH" ]; then
-              echo "ERROR: Could not find bench directory!"
-              exit 1
-            fi
-            echo "Found bench at: $BENCH_PATH"
+            BENCH_PATH="/home/frappe_user/frappe-bench"
+            SITE="kgs.trustbit.cloud"
+            APP="trustbit_advance_search"
 
             echo "=== Taking backup ==="
             cd "$BENCH_PATH"
-            bench --site $(cat sites/currentsite.txt) backup
+            su - frappe_user -c "cd $BENCH_PATH && bench --site $SITE backup"
 
             echo "=== Pulling latest code ==="
-            cd "$BENCH_PATH/apps/trustbit_advance_search"
+            cd "$BENCH_PATH/apps/$APP"
+            git config --global --add safe.directory "$BENCH_PATH/apps/$APP"
             git pull origin main
 
             echo "=== Building assets ==="
-            cd "$BENCH_PATH"
-            bench build --app trustbit_advance_search
+            su - frappe_user -c "cd $BENCH_PATH && bench build --app $APP"
 
             echo "=== Clearing cache ==="
-            bench --site $(cat sites/currentsite.txt) clear-cache
+            su - frappe_user -c "cd $BENCH_PATH && bench --site $SITE clear-cache"
 
             echo "=== Restarting services ==="
-            sudo supervisorctl restart all 2>/dev/null || bench restart
+            supervisorctl restart all 2>/dev/null || su - frappe_user -c "cd $BENCH_PATH && bench restart"
 
             echo "=== Deployment complete! ==="
