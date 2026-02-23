@@ -10,6 +10,8 @@ frappe.ui.form.on('Sales Invoice', {
 	},
 
 	refresh: function(frm) {
+		trustbit_advance_search.setup_keyboard_shortcuts(frm);
+
 		// Add Quick Add button
 		frm.add_custom_button(__('Quick Add (Ctrl+Q)'), function() {
 			trustbit_advance_search.open_quick_add_dialog(frm);

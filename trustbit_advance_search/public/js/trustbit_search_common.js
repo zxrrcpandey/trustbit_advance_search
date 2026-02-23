@@ -72,22 +72,32 @@ trustbit_advance_search = {
 	},
 
 	setup_keyboard_shortcuts: function(frm) {
-		$(document).off('keydown.trustbit_search_' + frm.doctype.replace(/ /g, '_'));
-		$(document).on('keydown.trustbit_search_' + frm.doctype.replace(/ /g, '_'), function(e) {
-			if (cur_frm && cur_frm.doctype === frm.doctype) {
-				// Ctrl+Q for Quick Search
-				if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
-					e.preventDefault();
-					e.stopImmediatePropagation();
+		// Register shortcuts once globally using Frappe's built-in shortcut API
+		if (trustbit_advance_search._shortcuts_registered) return;
+		trustbit_advance_search._shortcuts_registered = true;
+
+		frappe.ui.keys.add_shortcut({
+			shortcut: 'ctrl+q',
+			action: function() {
+				if (cur_frm && trustbit_advance_search.doctype_config[cur_frm.doctype]) {
 					trustbit_advance_search.open_quick_add_dialog(cur_frm);
+					return false;
 				}
-				// Ctrl+B for Barcode Scan
-				if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
-					e.preventDefault();
-					e.stopImmediatePropagation();
+			},
+			description: __('Trustbit Quick Add'),
+			ignore_inputs: true
+		});
+
+		frappe.ui.keys.add_shortcut({
+			shortcut: 'ctrl+b',
+			action: function() {
+				if (cur_frm && trustbit_advance_search.doctype_config[cur_frm.doctype]) {
 					trustbit_advance_search.open_barcode_dialog(cur_frm);
+					return false;
 				}
-			}
+			},
+			description: __('Trustbit Barcode Scan'),
+			ignore_inputs: true
 		});
 	},
 
