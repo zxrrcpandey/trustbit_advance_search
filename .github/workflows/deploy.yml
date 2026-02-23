@@ -24,8 +24,18 @@ jobs:
             SITE="kgs.trustbit.cloud"
             APP="trustbit_advance_search"
 
-            echo "=== Taking backup ==="
+            echo "=== Cleaning stale app references ==="
             cd "$BENCH_PATH"
+            for stale_app in apps/*_backup_*; do
+              if [ -d "$stale_app" ]; then
+                stale_name=$(basename "$stale_app")
+                echo "Removing stale app: $stale_name"
+                rm -rf "$stale_app"
+                sed -i "/$stale_name/d" sites/apps.txt 2>/dev/null || true
+              fi
+            done
+
+            echo "=== Taking backup ==="
             su - frappe_user -c "cd $BENCH_PATH && bench --site $SITE backup"
 
             echo "=== Pulling latest code ==="
