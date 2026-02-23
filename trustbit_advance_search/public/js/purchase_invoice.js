@@ -1,6 +1,6 @@
 // ════════════════════════════════════════════════════════════════════════
 // TRUSTBIT ADVANCE SEARCH - PURCHASE INVOICE
-// Keyboard Shortcuts: Ctrl+K (Search) | Ctrl+B (Barcode)
+// Keyboard Shortcuts: Ctrl+Q (Search) | Ctrl+B (Barcode)
 // ════════════════════════════════════════════════════════════════════════
 
 frappe.ui.form.on('Purchase Invoice', {
@@ -11,7 +11,7 @@ frappe.ui.form.on('Purchase Invoice', {
 
 	refresh: function(frm) {
 		// Add Quick Add button
-		frm.add_custom_button(__('Quick Add (Ctrl+K)'), function() {
+		frm.add_custom_button(__('Quick Add (Ctrl+Q)'), function() {
 			trustbit_advance_search.open_quick_add_dialog(frm);
 		}, __('Actions')).addClass('btn-primary');
 

@@ -75,14 +75,16 @@ trustbit_advance_search = {
 		$(document).off('keydown.trustbit_search_' + frm.doctype.replace(/ /g, '_'));
 		$(document).on('keydown.trustbit_search_' + frm.doctype.replace(/ /g, '_'), function(e) {
 			if (cur_frm && cur_frm.doctype === frm.doctype) {
-				// Ctrl+K for Quick Search
-				if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+				// Ctrl+Q for Quick Search
+				if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
 					e.preventDefault();
+					e.stopImmediatePropagation();
 					trustbit_advance_search.open_quick_add_dialog(cur_frm);
 				}
 				// Ctrl+B for Barcode Scan
 				if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
 					e.preventDefault();
+					e.stopImmediatePropagation();
 					trustbit_advance_search.open_barcode_dialog(cur_frm);
 				}
 			}
