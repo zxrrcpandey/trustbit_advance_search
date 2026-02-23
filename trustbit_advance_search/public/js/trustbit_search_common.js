@@ -72,33 +72,29 @@ trustbit_advance_search = {
 	},
 
 	setup_keyboard_shortcuts: function(frm) {
-		// Register shortcuts once globally using Frappe's built-in shortcut API
+		// Register shortcuts once globally using native capture-phase listener
 		if (trustbit_advance_search._shortcuts_registered) return;
 		trustbit_advance_search._shortcuts_registered = true;
 
-		frappe.ui.keys.add_shortcut({
-			shortcut: 'ctrl+q',
-			action: function() {
-				if (cur_frm && trustbit_advance_search.doctype_config[cur_frm.doctype]) {
-					trustbit_advance_search.open_quick_add_dialog(cur_frm);
-					return false;
-				}
-			},
-			description: __('Trustbit Quick Add'),
-			ignore_inputs: true
-		});
+		document.addEventListener('keydown', function(e) {
+			if (!cur_frm || !trustbit_advance_search.doctype_config[cur_frm.doctype]) return;
 
-		frappe.ui.keys.add_shortcut({
-			shortcut: 'ctrl+b',
-			action: function() {
-				if (cur_frm && trustbit_advance_search.doctype_config[cur_frm.doctype]) {
-					trustbit_advance_search.open_barcode_dialog(cur_frm);
-					return false;
-				}
-			},
-			description: __('Trustbit Barcode Scan'),
-			ignore_inputs: true
-		});
+			// Ctrl+Q for Quick Search
+			if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
+				e.preventDefault();
+				e.stopPropagation();
+				trustbit_advance_search.open_quick_add_dialog(cur_frm);
+			}
+
+			// Ctrl+B for Barcode Scan
+			if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+				e.preventDefault();
+				e.stopPropagation();
+				trustbit_advance_search.open_barcode_dialog(cur_frm);
+			}
+		}, true); // capture phase - fires before all other handlers
+
+		console.log('Trustbit keyboard shortcuts registered: Ctrl+Q (Quick Add), Ctrl+B (Barcode)');
 	},
 
 	// ════════════════════════════════════════════════════════════════════════
