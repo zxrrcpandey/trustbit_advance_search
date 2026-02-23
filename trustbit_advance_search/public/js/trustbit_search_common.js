@@ -42,6 +42,24 @@ trustbit_advance_search = {
 			party_field: 'customer',
 			price_list_field: 'selling_price_list'
 		},
+		'Quotation': {
+			child_table: 'items',
+			date_field: 'transaction_date',
+			warehouse_field: 'set_warehouse',
+			transaction_type: 'sales',
+			party_type: 'customer',
+			party_field: 'party_name',
+			price_list_field: 'selling_price_list'
+		},
+		'Purchase Receipt': {
+			child_table: 'items',
+			date_field: 'posting_date',
+			warehouse_field: 'set_warehouse',
+			transaction_type: 'purchase',
+			party_type: 'supplier',
+			party_field: 'supplier',
+			price_list_field: 'buying_price_list'
+		},
 		'Material Request': {
 			child_table: 'items',
 			date_field: 'schedule_date',

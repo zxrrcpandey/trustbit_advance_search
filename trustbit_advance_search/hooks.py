@@ -32,8 +32,10 @@ app_include_js = "/assets/trustbit_advance_search/js/trustbit_search_common.js"
 doctype_js = {
 	"Purchase Order": "public/js/purchase_order.js",
 	"Purchase Invoice": "public/js/purchase_invoice.js",
+	"Purchase Receipt": "public/js/purchase_receipt.js",
 	"Sales Order": "public/js/sales_order.js",
 	"Sales Invoice": "public/js/sales_invoice.js",
+	"Quotation": "public/js/quotation.js",
 	"Material Request": "public/js/material_request.js"
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
