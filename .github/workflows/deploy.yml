@@ -1,10 +1,21 @@
-name: Deploy to Production (kgs.trustbit.cloud)
+name: Deploy to Production (splashbox.in) — MANUAL ONLY
 
+# The push trigger is deliberately REMOVED.
+#
+# This workflow SSHes to `secrets.SERVER_HOST` and runs bench backup, bench
+# migrate, bench build and `supervisorctl restart all`. On the push trigger,
+# merging any commit into `main` — a README typo included — restarted production
+# services, at whatever time the commit happened to land.
+#
+# It also still named `kgs.trustbit.cloud`, decommissioned in the 2026-08-23 move,
+# so it would either deploy to a dead box or run a migrate for a site that does
+# not exist on the live one.
+#
+# Production trades 10:30-19:30 IST on a 1-core server and CLAUDE.md forbids
+# backups, migrates, builds and restarts inside that window — which an automatic
+# trigger cannot know about. Run this by hand, outside shop hours.
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:  # Allows manual trigger from GitHub UI
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -21,7 +32,7 @@ jobs:
             set -e
 
             BENCH_PATH="/home/frappe_user/frappe-bench"
-            SITE="kgs.trustbit.cloud"
+            SITE="splashbox.in"
             APP="trustbit_advance_search"
 
             echo "=== Cleaning stale app references ==="
